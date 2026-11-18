@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { FaPencil } from "react-icons/fa6";
+import { useTheme } from "../contexts/themeContext";
 
 export default function Toolbar() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const { darkMode, setDarkMode } = useTheme();
 
     return (
         <>
@@ -15,6 +17,9 @@ export default function Toolbar() {
             <div className={`fixed top-0 left-0 z-9999 h-screen w-75 bg-amber-500 transition-transform duration-500 rounded-r-2xl ease-in-out ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
                 <button onClick={() => setSidebarOpen(false)} className="cursor-pointer absolute top-2 right-2">
                     <CgClose size={30} color="white"/>
+                </button>
+                <button onClick={() => setDarkMode(!darkMode)}>
+                    {darkMode ? "Switch to light" : "Switch to dark"}
                 </button>
             </div>
         </>

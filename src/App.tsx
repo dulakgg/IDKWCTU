@@ -1,8 +1,9 @@
 import { useLocalStorage } from "@uidotdev/usehooks";
+import { useTheme } from "./contexts/themeContext";
 
 export default function App() {
-    const [darkMode, setDarkMode] = useLocalStorage("darkMode", false);
-
+    const { darkMode } = useTheme();
+    
     const [background, setBackground] = useLocalStorage("background", "#ffffff");
     const [darkBackground, setDarkBackground] = useLocalStorage("darkBackground", "#000000");
 
@@ -13,13 +14,6 @@ export default function App() {
           }}
           className="w-full h-full"
         >
-          <section>
-            <nav>
-              <button onClick={() => setDarkMode(!darkMode)}>
-                {darkMode ? "Switch to light" : "Switch to dark"}
-              </button>
-            </nav>
-          </section>
           <section>
             <input
                 type="color"
