@@ -1,5 +1,5 @@
 import { useLocalStorage } from "@uidotdev/usehooks";
-import { ThemeContext } from "./themeContext";
+import { ThemeContext } from "./ThemeContext";
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
     const [darkMode, setDarkMode] = useLocalStorage("darkMode", false);

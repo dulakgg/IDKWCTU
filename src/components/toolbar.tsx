@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { FaPencil } from "react-icons/fa6";
-import { useTheme } from "../contexts/themeContext";
+import { useTheme } from "../contexts/ThemeContext";
 
 export default function Toolbar() {
     const [sidebarOpen, setSidebarOpen] = useState(false);

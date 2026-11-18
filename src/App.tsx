@@ -1,31 +1,21 @@
-import { useLocalStorage } from "@uidotdev/usehooks";
-import { useTheme } from "./contexts/themeContext";
+import Footer from "./components/footer";
+import HeroSection from "./components/hero";
+import Navbar from "./components/navbar";
+import { useTheme } from "./contexts/ThemeContext";
 
 export default function App() {
     const { darkMode } = useTheme();
-    
-    const [background, setBackground] = useLocalStorage("background", "#ffffff");
-    const [darkBackground, setDarkBackground] = useLocalStorage("darkBackground", "#000000");
 
     return (
         <main
           style={{
-              backgroundColor: darkMode ? darkBackground : background
+              backgroundColor: darkMode ? "#fff" : "#000"
           }}
           className="w-full h-full"
         >
-          <section>
-            <input
-                type="color"
-                value={background}
-                onChange={(e) => setBackground(e.target.value)}
-            />
-            <input
-                type="color"
-                value={darkBackground}
-                onChange={(e) => setDarkBackground(e.target.value)}
-            />
-          </section>
+            <Navbar />
+            <HeroSection />
+            <Footer />
         </main>
     );
 }

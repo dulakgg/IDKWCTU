@@ -4,12 +4,15 @@ import './index.css'
 import App from './App.tsx'
 import ThemeProvider from './contexts/ThemeProvider.tsx'
 import Toolbar from './components/toolbar.tsx'
+import { BrowserRouter } from 'react-router-dom'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ThemeProvider>
-      <App />
-      <Toolbar />
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider>
+        <App />
+        <Toolbar />
+      </ThemeProvider>
+    </BrowserRouter>
   </StrictMode>,
 )
