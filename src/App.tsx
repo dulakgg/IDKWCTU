@@ -4,14 +4,14 @@ import Navbar from "./components/navbar";
 import { useTheme } from "./contexts/ThemeContext";
 
 export default function App() {
-    const { darkMode } = useTheme();
+    const { darkMode, background, darkBackground, textColor, darkTextColor } = useTheme();
 
     return (
         <main
           style={{
-              backgroundColor: darkMode ? "#fff" : "#000"
+              backgroundColor: darkMode ? background : darkBackground,
+              color: darkMode ? textColor : darkTextColor
           }}
-          className="w-full h-full"
         >
             <Navbar />
             <HeroSection />
