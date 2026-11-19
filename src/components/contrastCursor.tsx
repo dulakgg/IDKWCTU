@@ -110,8 +110,25 @@ export default function ContrastCursor() {
     useEffect(() => {
         let animationFrame = 0;
 
-        const handleClick = () => {
-            setActive((prev) => !prev);
+        const handleClick = (event: MouseEvent) => {
+            const target = event.target;
+
+            if (
+                target instanceof Element &&
+                target.closest("[data-contrast-ignore]")
+            ) {
+                return;
+            }
+
+            setActive((previous) => !previous);
+            setInfo(null);
+        };
+
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                setActive(false);
+                setInfo(null);
+            }
         };
 
         const handleMouseMove = (event: MouseEvent) => {
@@ -125,9 +142,14 @@ export default function ContrastCursor() {
                 const element = document.elementFromPoint(clientX, clientY);
 
                 if (!(element instanceof HTMLElement)) return;
-                if (element.closest("[data-contrast-ignore]")) return;
+
+                if (element.closest("[data-contrast-ignore]")) {
+                    setInfo(null);
+                    return;
+                }
 
                 const styles = getComputedStyle(element);
+
                 const foreground = styles.color;
                 const background = getBackground(element);
                 const ratio = getContrast(foreground, background);
@@ -143,22 +165,28 @@ export default function ContrastCursor() {
             });
         };
 
-        const handleMouseLeave = () => setInfo(null);
+        const handleMouseLeave = () => {
+            setInfo(null);
+        };
 
         window.addEventListener("click", handleClick);
         window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("keydown", handleKeyDown);
+
         document.addEventListener("mouseleave", handleMouseLeave);
 
         return () => {
             cancelAnimationFrame(animationFrame);
+
             window.removeEventListener("click", handleClick);
             window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("keydown", handleKeyDown);
+
             document.removeEventListener("mouseleave", handleMouseLeave);
         };
     }, [active]);
 
     const visible = active && info !== null;
-
     const status = getStatus(info?.ratio ?? 1);
 
     const requirements = [
@@ -170,7 +198,7 @@ export default function ContrastCursor() {
         <div
             data-contrast-ignore
             className={`pointer-events-none fixed z-99999 w-64 rounded-xl border border-white/10 bg-[#111827] p-4 text-white shadow-2xl transition-opacity duration-200 ${
-                visible ? "opacity-100 visible" : "opacity-0 invisible"
+                visible ? "visible opacity-100" : "invisible opacity-0"
             }`}
             style={{
                 left: info?.x ?? 0,
@@ -183,6 +211,7 @@ export default function ContrastCursor() {
                     <p className="text-sm font-semibold">
                         Text readability
                     </p>
+
                     <p className="text-[10px] text-gray-400">
                         Accessibility checker
                     </p>
@@ -233,6 +262,7 @@ export default function ContrastCursor() {
                         >
                             <span className="text-gray-400">
                                 WCAG {requirement.label}
+
                                 <span className="ml-1 text-gray-500">
                                     ({requirement.value}:1)
                                 </span>
@@ -280,6 +310,7 @@ export default function ContrastCursor() {
                             <p className="text-[10px] text-gray-400">
                                 {item.label}
                             </p>
+
                             <p className="truncate text-xs font-medium">
                                 {item.value}
                             </p>
@@ -287,6 +318,11 @@ export default function ContrastCursor() {
                     </div>
                 ))}
             </div>
+
+            <p className="mt-2 border-t border-white/10 pt-2 text-[10px] text-gray-500">
+                Click anywhere to {active ? "disable" : "enable"}.
+                Press ESC to disable.
+            </p>
         </div>
     );
 }

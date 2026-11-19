@@ -266,6 +266,7 @@ export default function Toolbar() {
     return (
         <>
             <div
+                data-contrast-ignore
                 className={`fixed bottom-1 left-1 z-9999 flex h-20 w-20 items-end justify-start transition-all duration-100 ease-in-out hover:scale-150 hover:translate-x-6 hover:-translate-y-6 ${
                     sidebarOpen
                         ? "pointer-events-none translate-y-full opacity-0"
@@ -288,6 +289,7 @@ export default function Toolbar() {
             </div>
 
             <aside
+                data-contrast-ignore
                 className={`fixed left-0 top-0 z-9999 h-screen w-80 max-w-[90vw] transition-transform duration-500 ease-in-out ${
                     sidebarOpen ? "translate-x-0" : "-translate-x-full"
                 }`}
@@ -326,10 +328,10 @@ export default function Toolbar() {
 
                     <div className="flex flex-1 flex-col gap-5 overflow-y-auto p-4">
                         <section className="flex flex-col gap-3">
+                            <p className="m-3">You can click anywhere on the page to open an automatic contrast checker :D</p>
                             <h3 className="font-semibold" style={{ color: toolbarColors.text }}>
                                 Appearance
                             </h3>
-
                             <button
                                 type="button"
                                 onClick={() => setDarkMode(!darkMode)}
@@ -453,6 +455,7 @@ export default function Toolbar() {
             </aside>
             {exportModalOpen && (
                 <div
+                    data-contrast-ignore
                     className="fixed inset-0 z-10000 flex items-center justify-center bg-black/50 p-4"
                     onClick={() => {
                         setExportModalOpen(false);
