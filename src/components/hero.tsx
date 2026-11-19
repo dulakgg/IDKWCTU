@@ -272,7 +272,7 @@ export default function HeroSection() {
                                             </span>
 
                                             <p
-                                                className="font-mono mt-2"
+                                                className="mt-2"
                                                 style={{
                                                     color: colors.text,
                                                     fontSize: `${theme.smallFontSize}px`,
@@ -293,7 +293,6 @@ export default function HeroSection() {
                                         borderColor: colors.inputBorder,
                                         borderWidth: `${theme.borderWidth}px`,
                                         borderRadius: `${theme.borderRadius}px`,
-                                        fontFamily: theme.fontFamily,
                                         fontSize: `${theme.fontSize}px`,
                                         outlineColor: colors.inputFocus,
                                     }}

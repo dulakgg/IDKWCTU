@@ -183,7 +183,6 @@ export default function Toolbar() {
                     color: toolbarColors.inputText,
                     borderColor: toolbarColors.inputBorder,
                     colorScheme: darkMode ? "dark" : "light",
-                    fontFamily: value,
                 }}
             >
                 {[
@@ -242,9 +241,6 @@ export default function Toolbar() {
                 style={{
                     backgroundColor: toolbarColors.background,
                     color: toolbarColors.text,
-                    borderRight: `${theme.borderWidth}px solid ${toolbarColors.border}`,
-                    borderRadius: `0 ${theme.borderRadius * 2}px ${theme.borderRadius * 2}px 0`,
-                    fontFamily: theme.fontFamily,
                     colorScheme: darkMode ? "dark" : "light",
                     boxShadow: "4px 0 24px rgba(0, 0, 0, 0.12)",
                 }}
@@ -257,7 +253,6 @@ export default function Toolbar() {
                         <h2
                             className="font-bold"
                             style={{
-                                fontFamily: theme.headingFontFamily,
                                 fontSize: `${theme.headingFontSize}px`,
                                 color: toolbarColors.text,
                             }}
@@ -289,7 +284,6 @@ export default function Toolbar() {
                                 style={{
                                     backgroundColor: toolbarColors.accent,
                                     color: toolbarColors.accentText,
-                                    borderRadius: `${theme.borderRadius}px`,
                                 }}
                             >
                                 {darkMode ? "Switch to light mode" : "Switch to dark mode"}
