@@ -1,3 +1,4 @@
+import ContrastCursor from "./components/contrastCursor";
 import Footer from "./components/footer";
 import HeroSection from "./components/hero";
 import Navbar from "./components/navbar";
@@ -14,6 +15,7 @@ export default function App() {
               fontFamily: fontFamily
           }}
         >
+            <ContrastCursor />
             <Navbar />
             <HeroSection />
             <Footer />
