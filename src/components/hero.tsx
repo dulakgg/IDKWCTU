@@ -110,7 +110,7 @@ export default function HeroSection() {
 
                         <div className="flex items-center gap-4">
                             <button
-                                className="px-7 py-3 font-medium transition-colors"
+                                className="px-7 py-3 font-medium transition-colors cursor-pointer"
                                 style={{
                                     backgroundColor: colors.primary,
                                     color: "#ffffff",
@@ -209,7 +209,7 @@ export default function HeroSection() {
                                     </p>
 
                                     <button
-                                        className="border px-5 py-3 w-fit font-medium transition-colors"
+                                        className="border px-5 py-3 w-fit font-medium transition-colors cursor-pointer"
                                         style={{
                                             backgroundColor: colors.secondary,
                                             color: colors.text,
@@ -301,7 +301,7 @@ export default function HeroSection() {
 
                                 <button
                                     disabled
-                                    className="px-5 py-3 w-fit font-medium border"
+                                    className="px-5 py-3 w-fit font-medium border cursor-not-allowed"
                                     style={{
                                         backgroundColor: colors.disabledBackground,
                                         color: colors.disabled,
