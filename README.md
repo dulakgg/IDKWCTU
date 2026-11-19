@@ -1,4 +1,4 @@
-# \<img src="[https://idkwctu.vercel.app/android-chrome-512x512.png](https://idkwctu.vercel.app/android-chrome-512x512.png)" width="24" style="vertical-align: middle;" /> I Don't Know What Colors To Use (IDKWCTU)
+# <img src="https://idkwctu.vercel.app/android-chrome-512x512.png" width="24" style="vertical-align: middle;" /> I Don't Know What Colors To Use (IDKWCTU)
 
 A simple, interactive website for experimenting with colors and discovering combinations that work well together.
 
@@ -35,7 +35,9 @@ Customize your website's appearance in real time, experiment with different colo
 
 Built using modern web technologies:
 
-\<p align="left">   \<img src="[https://skillicons.dev/icons?i=react,ts,tailwind,vite,vercel](https://skillicons.dev/icons?i=react,ts,tailwind,vite,vercel)" /> \</p>
+<p align="left">
+  <img src="https://skillicons.dev/icons?i=react,ts,tailwind,vite,vercel" />
+</p>
 
 ## Running Locally
 
@@ -93,9 +95,7 @@ npm run preview
 
 If you enjoy the project and would like to support its development, consider buying me a coffee!
 
-\<a href="[https://ko-fi.com/B0B61K8XOS](https://ko-fi.com/B0B61K8XOS)">
-&#x20; \<img src="[https://ko-fi.com/img/githubbutton_sm.svg](https://ko-fi.com/img/githubbutton_sm.svg)" alt="Support me on Ko-fi" />
-\</a>
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B61K8XOS)
 
 ## License
 
