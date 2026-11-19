@@ -7,11 +7,64 @@ import { useTheme } from "../contexts/ThemeContext";
 import Input from "./ui/input";
 
 export default function Toolbar() {
+    const [exportModalOpen, setExportModalOpen] = useState(false);
+    const [exportSelection, setExportSelection] = useState<"light" | "dark" | "both" | null>(null);
+
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const theme = useTheme();
 
     const { darkMode, setDarkMode } = theme;
     
+    type ColorField = (typeof colors)[number]["fields"][number];
+
+    const generateCSS = () => {
+        const getColorVariables = (dark: boolean): string => {
+            const fields: ColorField[] = colors.reduce<ColorField[]>(
+                (result, section) => [...result, ...section.fields],
+                []
+            );
+
+            return fields
+                .filter((field) => !field[1].startsWith("dark"))
+                .map((field) => {
+                    const key = field[1];
+
+                    const darkKey = `dark${key.charAt(0).toUpperCase()}${key.slice(1)}`;
+
+                    const value = dark
+                        ? theme[darkKey as keyof typeof theme]
+                        : theme[key];
+
+                    const variable = key.replace(
+                        /[A-Z]/g,
+                        (letter) => `-${letter.toLowerCase()}`
+                    );
+
+                    return `    --${variable}: ${value};`;
+                })
+                .join("\n");
+        };
+
+        const sharedVariables = [
+            `    --font-family: ${theme.fontFamily};`,
+            `    --heading-font-family: ${theme.headingFontFamily};`,
+            `    --font-size: ${theme.fontSize}px;`,
+            `    --heading-font-size: ${theme.headingFontSize}px;`,
+            `    --small-font-size: ${theme.smallFontSize}px;`,
+            `    --border-width: ${theme.borderWidth}px;`,
+            `    --border-radius: ${theme.borderRadius}px;`,
+        ].join("\n");
+
+        const light = `:root {\n${getColorVariables(false)}\n}`;
+        const dark = `.dark {\n${getColorVariables(true)}\n}`;
+        const shared = `body {\n${sharedVariables}\n}`;
+
+        if (exportSelection === "light") return `${light}\n\n${shared}`;
+        if (exportSelection === "dark") return `${dark}\n\n${shared}`;
+
+        return `${light}\n\n${dark}\n\n${shared}`;
+    };
+
     const toolbarColors = darkMode
         ? {
               background: "#090909",
@@ -280,7 +333,7 @@ export default function Toolbar() {
                             <button
                                 type="button"
                                 onClick={() => setDarkMode(!darkMode)}
-                                className="w-full rounded-lg px-4 py-3 font-medium transition-colors hover:opacity-85"
+                                className="w-full rounded-lg px-4 py-3 font-medium transition-colors hover:opacity-85 cursor-pointer"
                                 style={{
                                     backgroundColor: toolbarColors.accent,
                                     color: toolbarColors.accentText,
@@ -384,9 +437,123 @@ export default function Toolbar() {
                                 )}
                             </div>
                         </details>
+                        <button
+                            type="button"
+                            onClick={() => setExportModalOpen(true)}
+                            className="w-full rounded-lg px-2 py-3 font-medium transition-colors hover:opacity-85 cursor-pointer"
+                            style={{
+                                backgroundColor: toolbarColors.accent,
+                                color: toolbarColors.accentText,
+                            }}
+                        >
+                            Export theme
+                        </button>
                     </div>
                 </div>
             </aside>
+            {exportModalOpen && (
+                <div
+                    className="fixed inset-0 z-10000 flex items-center justify-center bg-black/50 p-4"
+                    onClick={() => {
+                        setExportModalOpen(false);
+                        setExportSelection(null);
+                    }}
+                >
+                    <div
+                        className="w-full max-w-2xl rounded-xl border p-5 shadow-2xl"
+                        style={{
+                            backgroundColor: toolbarColors.background,
+                            color: toolbarColors.text,
+                            borderColor: toolbarColors.border,
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="mb-5 flex items-center justify-between">
+                            <h2 className="text-lg font-bold">Export theme</h2>
+
+                            <button
+                                onClick={() => {
+                                    setExportModalOpen(false);
+                                    setExportSelection(null);
+                                }}
+                                className="cursor-pointer"
+                            >
+                                <CgClose size={22} />
+                            </button>
+                        </div>
+
+                        {!exportSelection ? (
+                            <div className="flex flex-col gap-3">
+                                <p className="text-sm opacity-60">
+                                    Select which theme variables you want to export.
+                                </p>
+
+                                {([
+                                    ["light", "Light theme", "Export :root variables"],
+                                    ["dark", "Dark theme", "Export .dark variables"],
+                                    ["both", "Both themes", "Export light and dark variables"],
+                                ] as const).map(([value, title, description]) => (
+                                    <button
+                                        key={value}
+                                        onClick={() => setExportSelection(value)}
+                                        className="rounded-lg border p-4 text-left transition-colors hover:opacity-70 cursor-pointer"
+                                        style={{ borderColor: toolbarColors.border }}
+                                    >
+                                        <div className="font-medium">{title}</div>
+                                        <p className="text-sm opacity-60">{description}</p>
+                                    </button>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="flex flex-col gap-4">
+                                <div className="flex items-center justify-between">
+                                    <span className="font-medium">
+                                        {exportSelection === "light"
+                                            ? "Light theme CSS"
+                                            : exportSelection === "dark"
+                                            ? "Dark theme CSS"
+                                            : "Complete theme CSS"}
+                                    </span>
+
+                                    <button
+                                        onClick={() => setExportSelection(null)}
+                                        className="text-sm opacity-60 hover:opacity-100 cursor-pointer"
+                                    >
+                                        Change selection
+                                    </button>
+                                </div>
+
+                                <textarea
+                                    readOnly
+                                    value={generateCSS()}
+                                    rows={16}
+                                    className="w-full resize-y rounded-lg border p-3 font-mono text-xs outline-none"
+                                    style={{
+                                        backgroundColor: toolbarColors.inputBackground,
+                                        color: toolbarColors.inputText,
+                                        borderColor: toolbarColors.inputBorder,
+                                    }}
+                                />
+
+                                <div className="flex justify-end">
+                                    <button
+                                        onClick={() =>
+                                            navigator.clipboard.writeText(generateCSS())
+                                        }
+                                        className="rounded-lg px-5 py-2 font-medium transition-opacity hover:opacity-80 cursor-pointer"
+                                        style={{
+                                            backgroundColor: toolbarColors.accent,
+                                            color: toolbarColors.accentText,
+                                        }}
+                                    >
+                                        Copy CSS
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
         </>
     );
 }
