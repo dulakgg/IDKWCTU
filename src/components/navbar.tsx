@@ -22,7 +22,7 @@ export default function Navbar() {
 
     return (
         <nav
-            className="flex justify-between items-center pl-2 px-5 py-2 transition-colors duration-200"
+            className="flex justify-between items-center pl-2 px-5 transition-colors duration-200"
             style={{
                 backgroundColor: colors.background,
                 borderBottom: `${theme.borderWidth}px solid ${colors.border}`,

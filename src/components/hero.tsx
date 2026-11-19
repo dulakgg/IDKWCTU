@@ -64,7 +64,7 @@ export default function HeroSection() {
 
     return (
         <section
-            className="w-full px-6 py-24 transition-colors duration-200"
+            className="w-full px-6 py-12 transition-colors duration-200"
             style={{
                 backgroundColor: colors.background,
                 ...bodyStyle,
