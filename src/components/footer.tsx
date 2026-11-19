@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
+import GitHubRepo from "./repoEmbed";
 
 export default function Footer() {
     const theme = useTheme();
@@ -64,6 +65,9 @@ export default function Footer() {
                         >
                             A simple tool to test colors, contrast and readability.
                         </p>
+                        <div className="mt-5">
+                            <GitHubRepo />
+                        </div>
                     </div>
                     <div className="flex gap-16">
                         <div className="flex flex-col gap-3">
@@ -154,7 +158,6 @@ export default function Footer() {
                         Made because I was bored.
                     </span>
                 </div>
-
             </div>
         </footer>
     );
